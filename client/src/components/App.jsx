@@ -9,7 +9,7 @@ const App = (props) => {
 
 return (
   <>
-    <SearchBar />
+    <SearchBar movies={movies} setMovies={setMovies}/>
     <MovieList movies={movies} />
   </>
   )
