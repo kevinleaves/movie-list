@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ExampleMovies from '../ExampleMovies.js'
 import MovieList from './MovieList.jsx'
+import SearchBar from './SearchBar.jsx'
 
 const App = (props) => {
   // import example movies as initial state array
@@ -8,6 +9,7 @@ const App = (props) => {
 
 return (
   <>
+    <SearchBar />
     <MovieList movies={movies} />
   </>
   )
