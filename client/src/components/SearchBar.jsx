@@ -4,7 +4,7 @@ const SearchBar = ({movies, setMovies}) => {
 
   const [input, setInput] = useState('')
 
-  const handleChange = (event) => {
+  const handleSearchChange = (event) => {
     setInput(event.target.value)
   }
 
@@ -24,7 +24,7 @@ const SearchBar = ({movies, setMovies}) => {
 
   return (
     <form onSubmit={handleSearchSubmit}>
-      <input onChange={handleChange} value={input} placeholder='search movies here'/>
+      <input onChange={handleSearchChange} value={input} placeholder='search movies here'/>
       <button type='submit'>GO!</button>
     </form>
   )
