@@ -8,7 +8,7 @@ const SearchBar = ({movies, setMovies}) => {
     setInput(event.target.value)
   }
 
-  const handleSubmit = (event) => {
+  const handleSearchSubmit = (event) => {
     event.preventDefault()
     let clone = [...movies]
     let filtered = clone.filter((movie) => {
@@ -23,7 +23,7 @@ const SearchBar = ({movies, setMovies}) => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSearchSubmit}>
       <input onChange={handleChange} value={input} placeholder='search movies here'/>
       <button type='submit'>GO!</button>
     </form>
