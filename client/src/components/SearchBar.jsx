@@ -14,6 +14,11 @@ const SearchBar = ({movies, setMovies}) => {
     let filtered = clone.filter((movie) => {
       return movie.title.toLowerCase().includes(input);
     })
+
+    //if found no movies: display a message stating no movies found
+    if (filtered.length === 0) {
+      filtered.push({title: 'no movie by that name found'})
+    }
     setMovies(filtered)
   }
 
