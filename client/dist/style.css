@@ -2,6 +2,15 @@ body {
   font-family: sans-serif, arial;
 }
 
+.movie-list {
+  border: 1px solid grey;
+  padding-left: 0px;
+}
+
 .movie {
   list-style-type: none;
+  padding: 10px;
+  margin: 3px;
+  border: 1px grey solid;
+  border-radius: 3px;
 }
