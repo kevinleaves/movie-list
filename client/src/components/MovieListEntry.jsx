@@ -1,12 +1,12 @@
 import React from 'react'
 
-const MovieListEntry = (props) => {
+const MovieListEntry = ({movie}) => {
 
 
   return (
-    <>
-      <div>MOVIE LIST ENTRY HERE</div>
-    </>
+    <li className='movie'>
+      {movie.title}
+    </li>
   )
 }
 
