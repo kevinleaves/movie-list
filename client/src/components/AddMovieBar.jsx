@@ -11,7 +11,7 @@ const AddMovieBar = ({movies, setMovies}) => {
   const handleAddSubmit = (event) => {
     event.preventDefault()
     let clone = [...movies]
-    let movie = {title: addInput}
+    let movie = {title: addInput, watched: false}
     clone.push(movie)
     setMovies(clone)
     setAddInput('')
