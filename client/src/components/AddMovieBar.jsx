@@ -19,8 +19,9 @@ const AddMovieBar = ({movies, setMovies}) => {
 
   return (
     <form onSubmit={handleAddSubmit}>
-      <input onChange={handleAddChange} placeholder='add movie title here' value={addInput}/>
-      <button>ADD</button>
+      <input onChange={handleAddChange}
+      placeholder='add movie title here' value={addInput}/>
+      <button type='submit'>ADD</button>
     </form>
   )
 

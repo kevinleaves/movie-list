@@ -6,7 +6,7 @@ import AddMovieBar from './AddMovieBar.jsx'
 
 const App = (props) => {
   // import example movies as initial state array
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState(ExampleMovies);
 
 return (
   <>
