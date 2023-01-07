@@ -31,7 +31,7 @@ const App = (props) => {
   const handleSearchSubmit = (event) => {
     event.preventDefault()
     let filtered = [...movies].filter((movie) => {
-      return movie.title.toLowerCase().includes(search);
+      return movie.title.toLowerCase().includes(search.toLowerCase());
     })
 
     //if found no movies: display a message stating no movies found
@@ -51,9 +51,12 @@ const App = (props) => {
   const handleAddSubmit = (event) => {
     event.preventDefault()
     let clone = [...movies]
+    let searchedClone = [...searchedMovies]
     let movie = {title: addMovie, watched: false}
     clone.push(movie)
+    searchedClone.push(movie)
     setMovies(clone)
+    setSearchedMovies(searchedClone)
     setAddMovie('')
   }
 
@@ -61,6 +64,10 @@ const App = (props) => {
   const toggleWatched = (index) => {
     console.log(index, 'index?')
     console.log('toggle!')
+    // this works for some reason?
+    let clone = [...movies]
+    clone[index].watched = !clone[index].watched
+    setMovies(clone)
   }
 
 
@@ -68,10 +75,7 @@ return (
   <>
     <AddMovieBar addMovie={addMovie} onChange={handleAddChange} onSubmit={handleAddSubmit}/>
     <SearchBar search={search} setSearchedMovies={setSearchedMovies} onChange={handleSearchChange} onSubmit={handleSearchSubmit}/>
-    {searchedMovies.length > 0
-    ? <MovieList toggle={toggleWatched} movies={searchedMovies} setMovies={setMovies}/>
-    : <MovieList toggle={toggleWatched}movies={movies} setMovies={setMovies}/>
-    }
+    <MovieList movies={movies} searchedMovies={searchedMovies} toggle={toggleWatched}/>
   </>
   )
 };
