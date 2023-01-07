@@ -12,11 +12,12 @@ const App = (props) => {
   // LEVEL 1: move search bar input state here
   const [search, setSearch] = useState('')
   const [addMovie, setAddMovie] = useState('')
+  // const [watched, setWatched] = useState(false);
 
   //on first render, add a watched property to all movies
   useEffect(() => {
     let clone = movies.map((movie) => {
-      movie.didIWatch = false;
+      movie.watched = false;
       return movie
     })
     setMovies(clone)
@@ -30,7 +31,7 @@ const App = (props) => {
   const handleSearchSubmit = (event) => {
     event.preventDefault()
     let filtered = [...movies].filter((movie) => {
-      return movie.title.toLowerCase().includes(input);
+      return movie.title.toLowerCase().includes(search);
     })
 
     //if found no movies: display a message stating no movies found
@@ -50,20 +51,25 @@ const App = (props) => {
   const handleAddSubmit = (event) => {
     event.preventDefault()
     let clone = [...movies]
-    let movie = {title: addInput, watched: false}
+    let movie = {title: addMovie, watched: false}
     clone.push(movie)
     setMovies(clone)
     setAddMovie('')
   }
 
+  // LEVEL 3: TOGGLE WATCHED & FILTER BY WATCHED/NOT WATCHED
+  const toggleWatched = (event) => {
+    console.log('toggle!')
+  }
+
 
 return (
   <>
-    <AddMovieBar onChange={handleAddChange} onSubmit={handleAddSubmit}/>
-    <SearchBar setSearchedMovies={setSearchedMovies} onChange={handleSearchChange} onSubmit={handleSearchSubmit}/>
+    <AddMovieBar addMovie={addMovie} onChange={handleAddChange} onSubmit={handleAddSubmit}/>
+    <SearchBar search={search} setSearchedMovies={setSearchedMovies} onChange={handleSearchChange} onSubmit={handleSearchSubmit}/>
     {searchedMovies.length > 0
-    ? <MovieList movies={searchedMovies} setMovies={setMovies}/>
-    : <MovieList movies={movies} setMovies={setMovies}/>
+    ? <MovieList toggle={toggleWatched} movies={searchedMovies} setMovies={setMovies}/>
+    : <MovieList toggle={toggleWatched}movies={movies} setMovies={setMovies}/>
     }
   </>
   )

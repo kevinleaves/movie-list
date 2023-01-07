@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const AddMovieBar = ({onChange, onSubmit}) => {
+const AddMovieBar = ({addMovie, onChange, onSubmit}) => {
 
   return (
     <form onSubmit={onSubmit}>

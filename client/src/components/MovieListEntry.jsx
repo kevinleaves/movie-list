@@ -1,30 +1,30 @@
 import React, {useState, useEffect} from 'react'
 
-const MovieListEntry = ({movie, index, movies, setMovies}) => {
+const MovieListEntry = ({toggle, movie, index}) => {
 
-  const [watched, setWatched] = useState(false);
 
-  useEffect(() => {
-    let clone = [...movies]
-    clone[index].didIWatch = watched;
-    setMovies(clone);
-  }, [watched])
 
-  const toggleWatched = (event) => {
-    setWatched(!watched);
-    // let clone = [...movies]
-    // console.log(clone[index])
-    // clone[index].didIWatch = !clone[index].didIWatch;
-    // console.log(clone)
-    // setMovies(clone);
-  }
+  // useEffect(() => {
+  //   let clone = [...movies]
+  //   clone[index].didIWatch = watched;
+  //   setMovies(clone);
+  // }, [watched])
+
+  // const toggleWatched = (event) => {
+  //   setWatched(!watched);
+  //   // let clone = [...movies]
+  //   // console.log(clone[index])
+  //   // clone[index].didIWatch = !clone[index].didIWatch;
+  //   // console.log(clone)
+  //   // setMovies(clone);
+  // }
 
   return (
     <li className='movie'>
       {movie.title}
-      {watched
-      ? <button className='watched-btn' onClick={toggleWatched}>WATCHED</button>
-      : <button className='watched-btn' onClick={toggleWatched}>NOT WATCHED</button>
+      {movie.watched
+      ? <button className='watched-btn' onClick={toggle}>WATCHED</button>
+      : <button className='watched-btn' onClick={toggle}>NOT WATCHED</button>
       }
     </li>
   )

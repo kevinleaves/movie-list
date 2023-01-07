@@ -1,14 +1,14 @@
 import React from 'react'
 import MovieListEntry from './MovieListEntry.jsx'
 
-const MovieList = ({ movies, setMovies, searchedMovies}) => {
+const MovieList = ({ toggle, movies, searchedMovies}) => {
 
 
   // render searched movies or nonsearched movies
   return (
     <ul className='movie-list'>
       {movies.map((movie, index) => {
-        return <MovieListEntry setMovies={setMovies} movies={movies} index={index} key={index} movie={movie}/>
+        return <MovieListEntry toggle={toggle}index={index} key={index} movie={movie}/>
       })}
     </ul>
   )
