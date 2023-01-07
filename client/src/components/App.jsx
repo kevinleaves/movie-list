@@ -58,7 +58,8 @@ const App = (props) => {
   }
 
   // LEVEL 3: TOGGLE WATCHED & FILTER BY WATCHED/NOT WATCHED
-  const toggleWatched = (event) => {
+  const toggleWatched = (index) => {
+    console.log(index, 'index?')
     console.log('toggle!')
   }
 
