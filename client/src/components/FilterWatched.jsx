@@ -1,15 +1,11 @@
 import React from 'react';
 
-const FilterWatched = () => {
-
-  const filter () => {
-
-  }
+const FilterWatched = ({filter}) => {
 
   return (
     <>
-      <button onClick={filter}>WATCHED</button>
-      <button onClick={filter}>TO WATCH</button>
+      <button onClick={() => filter(true)}>WATCHED</button>
+      <button onClick={() => filter(false)}>TO WATCH</button>
     </>
   )
 };

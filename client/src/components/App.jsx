@@ -3,16 +3,20 @@ import ExampleMovies from '../ExampleMovies.js'
 import MovieList from './MovieList.jsx'
 import SearchBar from './SearchBar.jsx'
 import AddMovieBar from './AddMovieBar.jsx'
+import FilterWatched from './FilterWatched.jsx'
 
 const App = (props) => {
   // import example movies as initial state array
   const [movies, setMovies] = useState(ExampleMovies);
   const [searchedMovies, setSearchedMovies] = useState([])
 
+  // keep track of watched / unwatched movies
+  const [watchedMovies, setWatchedMovies] = useState([])
+  const [unwatched, setUnwatched] = useState([])
+
   // LEVEL 1: move search bar input state here
   const [search, setSearch] = useState('')
   const [addMovie, setAddMovie] = useState('')
-  // const [watched, setWatched] = useState(false);
 
   //on first render, add a watched property to all movies
   useEffect(() => {
@@ -66,15 +70,33 @@ const App = (props) => {
     console.log('toggle!')
     // this works for some reason?
     let clone = [...movies]
+
     clone[index].watched = !clone[index].watched
     setMovies(clone)
+    // setUnwatched(unwatchedClone)
+    // setWatchedMovies(watchedClone)
   }
 
+  const filter = (bool) => {
+    // takes my original movie array, filter it. that's how you determine state of the watched/unwatched arrays. pass it into movieList
+    //  on either click, pass a different array into movielist
+    console.log('filter!')
+    let filtered = [...movies].filter((movie) => {
+      return movie.watched === bool;
+    })
+    console.log(filtered)
+    if (bool) {
+      setWatchedMovies(filtered)
+    } else {
+      setUnwatched(filtered);
+    }
+  }
 
 return (
   <>
     <AddMovieBar addMovie={addMovie} onChange={handleAddChange} onSubmit={handleAddSubmit}/>
     <SearchBar search={search} setSearchedMovies={setSearchedMovies} onChange={handleSearchChange} onSubmit={handleSearchSubmit}/>
+    <FilterWatched filter={filter}/>
     <MovieList movies={movies} searchedMovies={searchedMovies} toggle={toggleWatched}/>
   </>
   )
