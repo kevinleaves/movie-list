@@ -1,26 +1,11 @@
 import React, { useState } from 'react'
 
-const AddMovieBar = ({movies, setMovies}) => {
-
-  const [addInput, setAddInput] = useState('')
-
-  const handleAddChange = (event) => {
-    setAddInput(event.target.value)
-  }
-
-  const handleAddSubmit = (event) => {
-    event.preventDefault()
-    let clone = [...movies]
-    let movie = {title: addInput, watched: false}
-    clone.push(movie)
-    setMovies(clone)
-    setAddInput('')
-  }
+const AddMovieBar = ({onChange, onSubmit}) => {
 
   return (
-    <form onSubmit={handleAddSubmit}>
-      <input onChange={handleAddChange}
-      placeholder='add movie title here' value={addInput}/>
+    <form onSubmit={onSubmit}>
+      <input onChange={onChange}
+      placeholder='add movie title here' value={addMovie}/>
       <button type='submit'>ADD</button>
     </form>
   )

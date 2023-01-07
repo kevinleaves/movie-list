@@ -11,7 +11,18 @@ const App = (props) => {
 
   // LEVEL 1: move search bar input state here
   const [search, setSearch] = useState('')
+  const [addMovie, setAddMovie] = useState('')
 
+  //on first render, add a watched property to all movies
+  useEffect(() => {
+    let clone = movies.map((movie) => {
+      movie.didIWatch = false;
+      return movie
+    })
+    setMovies(clone)
+  }, [])
+
+  // SEARCH HANDLERS
   const handleSearchChange = (event) => {
     setSearch(event.target.value)
   }
@@ -29,18 +40,26 @@ const App = (props) => {
     setSearchedMovies(filtered)
   }
 
-  //on first render, add a watched property to all movies
-  useEffect(() => {
-    let clone = movies.map((movie) => {
-      movie.didIWatch = false;
-      return movie
-    })
+  // LEVEL 2: add movies to the list
+  // ADD HANDLERS
+
+  const handleAddChange = (event) => {
+    setAddMovie(event.target.value)
+  }
+
+  const handleAddSubmit = (event) => {
+    event.preventDefault()
+    let clone = [...movies]
+    let movie = {title: addInput, watched: false}
+    clone.push(movie)
     setMovies(clone)
-  }, [])
+    setAddMovie('')
+  }
+
 
 return (
   <>
-    <AddMovieBar movies={movies} setMovies={setMovies}/>
+    <AddMovieBar onChange={handleAddChange} onSubmit={handleAddSubmit}/>
     <SearchBar setSearchedMovies={setSearchedMovies} onChange={handleSearchChange} onSubmit={handleSearchSubmit}/>
     {searchedMovies.length > 0
     ? <MovieList movies={searchedMovies} setMovies={setMovies}/>
