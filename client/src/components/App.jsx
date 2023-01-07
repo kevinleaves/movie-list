@@ -7,6 +7,27 @@ import AddMovieBar from './AddMovieBar.jsx'
 const App = (props) => {
   // import example movies as initial state array
   const [movies, setMovies] = useState(ExampleMovies);
+  const [searchedMovies, setSearchedMovies] = useState([])
+
+  // LEVEL 1: move search bar input state here
+  const [search, setSearch] = useState('')
+
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value)
+  }
+
+  const handleSearchSubmit = (event) => {
+    event.preventDefault()
+    let filtered = [...movies].filter((movie) => {
+      return movie.title.toLowerCase().includes(input);
+    })
+
+    //if found no movies: display a message stating no movies found
+    if (filtered.length === 0) {
+      filtered.push({title: 'no movie by that name found'})
+    }
+    setSearchedMovies(filtered)
+  }
 
   //on first render, add a watched property to all movies
   useEffect(() => {
@@ -20,8 +41,11 @@ const App = (props) => {
 return (
   <>
     <AddMovieBar movies={movies} setMovies={setMovies}/>
-    <SearchBar movies={movies} setMovies={setMovies}/>
-    <MovieList movies={movies} setMovies={setMovies}/>
+    <SearchBar setSearchedMovies={setSearchedMovies} onChange={handleSearchChange} onSubmit={handleSearchSubmit}/>
+    {searchedMovies.length > 0
+    ? <MovieList movies={searchedMovies} setMovies={setMovies}/>
+    : <MovieList movies={movies} setMovies={setMovies}/>
+    }
   </>
   )
 };

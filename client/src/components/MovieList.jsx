@@ -1,10 +1,10 @@
 import React from 'react'
 import MovieListEntry from './MovieListEntry.jsx'
 
-const MovieList = ({ movies, setMovies}) => {
+const MovieList = ({ movies, setMovies, searchedMovies}) => {
 
 
-
+  // render searched movies or nonsearched movies
   return (
     <ul className='movie-list'>
       {movies.map((movie, index) => {
