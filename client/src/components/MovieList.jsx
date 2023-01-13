@@ -24,3 +24,4 @@ const MovieList = ({ toggle, movies, searchedMovies }) => {
 }
 
 export default MovieList
+
