@@ -15,7 +15,8 @@ module.exports = {
   },
 
   post: function (req, res) {
-    model.create()
+    console.log(req.body, 'my movie in here')
+    model.create(req.body)
     .then((result) => {
     res.status(201).json(result)
     })

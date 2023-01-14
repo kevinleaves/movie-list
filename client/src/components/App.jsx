@@ -8,7 +8,7 @@ import axios from 'Axios'
 
 const App = (props) => {
   // import example movies as initial state array
-  const [movies, setMovies] = useState(ExampleMovies);
+  const [movies, setMovies] = useState([]);
   const [searchedMovies, setSearchedMovies] = useState([])
 
   // keep track of watched / unwatched movies
@@ -66,6 +66,15 @@ const App = (props) => {
     let clone = [...movies]
     let searchedClone = [...searchedMovies]
     let movie = {title: addMovie, watched: false}
+
+    axios.post('/api/movies', movie)
+    .then(() => {
+      console.log(result, 'res here');
+    })
+    .catch((err) => {
+      console.log(err, 'err in app')
+    })
+
     clone.push(movie)
     searchedClone.push(movie)
     setMovies(clone)

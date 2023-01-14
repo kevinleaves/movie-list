@@ -22,14 +22,15 @@ module.exports = {
     })
   },
 
-  create: function () {
+  create: function (movie) {
     // make this query dynamic
-    let query = "INSERT INTO movies (title, watched) VALUES ('The Flash', false);"
-    let queryArgs = [];
+    // console.log(obj, 'reqbody');
+    let query = "INSERT INTO movies (title, watched) VALUES (?, ?);"
+    let queryArgs = [movie.title, movie.watched];
 
     return new Promise ((resolve, reject) => {
       // call the async function
-      db.connection.query(query, (err, result) => {
+      db.connection.query(query, queryArgs, (err, result) => {
         if (err) {
           reject(err);
         } else {
@@ -37,7 +38,7 @@ module.exports = {
         }
       })
     })
-  }
+  },
 };
 
 // Movie.sync()
