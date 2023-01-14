@@ -26,6 +26,7 @@
     "mysql2": "^3.0.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
+    "sequelize": "^6.28.0",
     "underscore": "^1.12.1"
   }
 }
