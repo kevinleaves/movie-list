@@ -4,6 +4,7 @@ import MovieList from './MovieList.jsx'
 import SearchBar from './SearchBar.jsx'
 import AddMovieBar from './AddMovieBar.jsx'
 import FilterWatched from './FilterWatched.jsx'
+import axios from 'Axios'
 
 const App = (props) => {
   // import example movies as initial state array
@@ -18,14 +19,22 @@ const App = (props) => {
   const [search, setSearch] = useState('')
   const [addMovie, setAddMovie] = useState('')
 
-  //on first render, add a watched property to all movies
+  // on first render, fetch movies from db
   useEffect(() => {
-    let clone = movies.map((movie) => {
-      movie.watched = false;
-      return movie
+    axios.get('/api/movies')
+    .then((result) => {
+      setMovies(result.data);
     })
-    setMovies(clone)
-  }, [])
+  })
+
+  //on first render, add a watched property to all movies
+  // useEffect(() => {
+  //   let clone = movies.map((movie) => {
+  //     movie.watched = false;
+  //     return movie
+  //   })
+  //   setMovies(clone)
+  // }, [])
 
   // SEARCH HANDLERS
   const handleSearchChange = (event) => {
