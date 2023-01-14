@@ -8,7 +8,7 @@ const router = require('./routes');
 app.use(express.static('client/dist'));
 
 
-app.use(morgan('combined'));
+app.use(morgan('dev'));
 
 // parses incoming JSON requests and puts the parsed data in req.body
 app.use(express.json());

@@ -25,7 +25,7 @@ const App = (props) => {
     .then((result) => {
       setMovies(result.data);
     })
-  })
+  },[]);
 
   //on first render, add a watched property to all movies
   // useEffect(() => {
