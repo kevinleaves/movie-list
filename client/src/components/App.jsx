@@ -9,15 +9,12 @@ import axios from 'Axios'
 const App = (props) => {
   // import example movies as initial state array
   const [movies, setMovies] = useState([]);
-  const [searchedMovies, setSearchedMovies] = useState([])
-
-  // keep track of watched / unwatched movies
-  const [watchedMovies, setWatchedMovies] = useState([])
-  const [unwatched, setUnwatched] = useState([])
 
   // LEVEL 1: move search bar input state here
   const [search, setSearch] = useState('')
   const [addMovie, setAddMovie] = useState('')
+
+  const [currentTab, setCurrentTab] = useState(null);
 
   // on first render, fetch movies from db
   useEffect(() => {
@@ -31,6 +28,7 @@ const App = (props) => {
   // useEffect(() => {
   //   let clone = movies.map((movie) => {
   //     movie.watched = false;
+
   //     return movie
   //   })
   //   setMovies(clone)
@@ -43,15 +41,13 @@ const App = (props) => {
 
   const handleSearchSubmit = (event) => {
     event.preventDefault()
-    let filtered = [...movies].filter((movie) => {
-      return movie.title.toLowerCase().includes(search.toLowerCase());
-    })
-
-    //if found no movies: display a message stating no movies found
-    if (filtered.length === 0) {
-      filtered.push({title: 'no movie by that name found'})
+    // on search bar enter, reset current tab state + displays original movies again
+    if (search === '') {
+      setCurrentTab(null);
+      setMovies(movies);
     }
-    setSearchedMovies(filtered)
+
+    setSearch('')
   }
 
   // LEVEL 2: add movies to the list
@@ -63,23 +59,24 @@ const App = (props) => {
 
   const handleAddSubmit = (event) => {
     event.preventDefault()
-    let clone = [...movies]
-    let searchedClone = [...searchedMovies]
+
     let movie = {title: addMovie, watched: false}
 
     axios.post('/api/movies', movie)
-    .then(() => {
-      console.log(result, 'res here');
-    })
-    .catch((err) => {
-      console.log(err, 'err in app')
-    })
-
-    clone.push(movie)
-    searchedClone.push(movie)
-    setMovies(clone)
-    setSearchedMovies(searchedClone)
-    setAddMovie('')
+      .then((result) => {
+        console.log(result, 'res here');
+      })
+      .then(() => {
+        axios.get('/api/movies')
+          .then((result) => {
+            setAddMovie('')
+            setSearchedMovies(result.data)
+            setMovies(result.data)
+          })
+      })
+      .catch((err) => {
+        console.log(err, 'err in app')
+      })
   }
 
   // LEVEL 3: TOGGLE WATCHED & FILTER BY WATCHED/NOT WATCHED
@@ -88,34 +85,24 @@ const App = (props) => {
     console.log('toggle!')
     // this works for some reason?
     let clone = [...movies]
-
     clone[index].watched = !clone[index].watched
+
     setMovies(clone)
-    // setUnwatched(unwatchedClone)
-    // setWatchedMovies(watchedClone)
   }
 
   const filter = (bool) => {
-    // takes my original movie array, filter it. that's how you determine state of the watched/unwatched arrays. pass it into movieList
-    //  on either click, pass a different array into movielist
-    console.log('filter!')
-    let filtered = [...movies].filter((movie) => {
-      return movie.watched === bool;
-    })
-    console.log(filtered)
-    if (bool) {
-      setWatchedMovies(filtered)
-    } else {
-      setUnwatched(filtered);
-    }
+    setCurrentTab(bool)
   }
+
+// filtered array that isn't state but dynamically changes in app.
+const list = !search ? movies : movies.filter((movie) => movie.title.toLowerCase().includes(search.toLowerCase()));
 
 return (
   <>
     <AddMovieBar addMovie={addMovie} onChange={handleAddChange} onSubmit={handleAddSubmit}/>
-    <SearchBar search={search} setSearchedMovies={setSearchedMovies} onChange={handleSearchChange} onSubmit={handleSearchSubmit}/>
+    <SearchBar search={search} onChange={handleSearchChange} onSubmit={handleSearchSubmit}/>
     <FilterWatched filter={filter}/>
-    <MovieList movies={movies} searchedMovies={searchedMovies} toggle={toggleWatched}/>
+    <MovieList movies={list} currentTab={currentTab}/>
   </>
   )
 };

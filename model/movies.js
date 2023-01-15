@@ -22,11 +22,11 @@ module.exports = {
     })
   },
 
-  create: function (movie) {
+  create: function (params) {
     // make this query dynamic
     // console.log(obj, 'reqbody');
     let query = "INSERT INTO movies (title, watched) VALUES (?, ?);"
-    let queryArgs = [movie.title, movie.watched];
+    let queryArgs = [params.title, params.watched];
 
     return new Promise ((resolve, reject) => {
       // call the async function

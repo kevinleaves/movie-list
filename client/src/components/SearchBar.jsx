@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-const SearchBar = ({ search, setSearchedMovies, onChange, onSubmit }) => {
+const SearchBar = ({ search, onChange, onSubmit }) => {
 
   return (
     <form onSubmit={onSubmit}>
