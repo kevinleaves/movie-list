@@ -80,12 +80,15 @@ const App = (props) => {
   }
 
   // LEVEL 3: TOGGLE WATCHED & FILTER BY WATCHED/NOT WATCHED
-  const toggleWatched = (index) => {
-    console.log(index, 'index?')
-    console.log('toggle!')
-    // this works for some reason?
+  const toggleWatched = (movieObj) => {
     let clone = [...movies]
-    clone[index].watched = !clone[index].watched
+    clone.forEach((movie) => {
+      if (movie.title === movieObj.title) {
+        movie.watched = !movie.watched
+      }
+    })
+
+    axios.patch('api/movies', movieObj);
 
     setMovies(clone)
   }
@@ -102,7 +105,7 @@ return (
     <AddMovieBar addMovie={addMovie} onChange={handleAddChange} onSubmit={handleAddSubmit}/>
     <SearchBar search={search} onChange={handleSearchChange} onSubmit={handleSearchSubmit}/>
     <FilterWatched filter={filter}/>
-    <MovieList movies={list} currentTab={currentTab}/>
+    <MovieList movies={list} toggle={toggleWatched} currentTab={currentTab}/>
   </>
   )
 };

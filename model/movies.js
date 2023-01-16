@@ -39,6 +39,20 @@ module.exports = {
       })
     })
   },
+
+  update: function (params) {
+    let query = "UPDATE movies SET watched = !watched WHERE title = ?;"
+    let queryArgs = [params.title];
+    return new Promise((resolve, reject) => {
+      db.connection.query(query, queryArgs, (err, result) => {
+        if (err) {
+          console.log(err);
+          reject(err)
+        }
+        resolve(result)
+      })
+    })
+  }
 };
 
 // Movie.sync()

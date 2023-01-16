@@ -24,5 +24,16 @@ module.exports = {
       console.log(err);
       res.sendStatus(400);
     })
+  },
+
+  patch: function (req, res) {
+    model.update(req.body)
+      .then((result) => {
+        res.status(201).json(result);
+      })
+      .catch((err) => {
+        console.log(err)
+        res.sendStatus(400);
+      })
   }
 };

@@ -9,7 +9,7 @@ const MovieList = ({ toggle, movies, currentTab }) => {
         {currentTab !== null ?
         movies.filter((movie) => movie.watched == currentTab)
         .map((movie, index) => {
-          return <MovieListEntry toggle={toggle} index={index} key={index} movie={movie}/>
+          return <MovieListEntry toggle={toggle} key={index} index={index} movie={movie}/>
         })
         : movies.map((movie, index) => {
           return <MovieListEntry toggle={toggle} index={index} key={index} movie={movie}/>
