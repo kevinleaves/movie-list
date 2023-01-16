@@ -16,12 +16,17 @@ const App = (props) => {
 
   const [currentTab, setCurrentTab] = useState(null);
 
+  // reuse a get request + updating our movies state
+  const updateData = () => {
+    axios.get('/api/movies')
+      .then((result) => {
+        setMovies(result.data);
+    })
+  }
+
   // on first render, fetch movies from db
   useEffect(() => {
-    axios.get('/api/movies')
-    .then((result) => {
-      setMovies(result.data);
-    })
+    updateData();
   },[]);
 
   //on first render, add a watched property to all movies
@@ -81,16 +86,22 @@ const App = (props) => {
 
   // LEVEL 3: TOGGLE WATCHED & FILTER BY WATCHED/NOT WATCHED
   const toggleWatched = (movieObj) => {
-    let clone = [...movies]
-    clone.forEach((movie) => {
-      if (movie.title === movieObj.title) {
-        movie.watched = !movie.watched
-      }
-    })
+    // VOLATILE
+    // let clone = [...movies]
+    // clone.forEach((movie) => {
+    //   if (movie.title === movieObj.title) {
+    //     movie.watched = !movie.watched
+    //   }
+    // })
+    // setMovies(clone)
 
-    axios.patch('api/movies', movieObj);
-
-    setMovies(clone)
+    // NON-VOLATILE
+    axios.patch('api/movies', movieObj)
+      .then((result) => {
+        console.log('updated!', result)
+        updateData();
+      })
+      .catch((err) => console.log(err, 'we have err'))
   }
 
   const filter = (bool) => {

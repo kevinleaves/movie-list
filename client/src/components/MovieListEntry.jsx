@@ -8,7 +8,7 @@ const MovieListEntry = ({toggle, movie, index}) => {
       {movie.watched ?
       <button className='watched-btn'
       onClick={() => toggle(movie)}>WATCHED</button>
-      : <button className='watched-btn'
+      : <button className='not-watched-btn'
       onClick={() => toggle(movie)}>NOT WATCHED</button>
       }
     </li>
