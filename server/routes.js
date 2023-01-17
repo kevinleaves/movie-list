@@ -8,4 +8,5 @@ router.post('/movies', controller.movies.post);
 
 router.patch('/movies', controller.movies.patch);
 
+router.delete('/movies', controller.movies.delete);
 module.exports = router

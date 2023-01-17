@@ -35,5 +35,16 @@ module.exports = {
         console.log(err)
         res.sendStatus(400);
       })
+  },
+
+  delete: function (req, res) {
+    model.remove(req.body, (err, result) => {
+      if (err) {
+        console.log(err, 'err in controller');
+        res.sendStatus(400)
+      }
+      res.status(200).json(result);
+      console.log(result);
+    });
   }
 };

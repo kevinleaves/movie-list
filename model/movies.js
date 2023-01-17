@@ -52,6 +52,17 @@ module.exports = {
         resolve(result)
       })
     })
+  },
+
+  remove: function (params, callback) {
+    let query = "DELETE FROM movies WHERE id = ? LIMIT 1"
+    let queryArgs = [params.id];
+    db.connection.query(query, queryArgs, (err, result) => {
+      if (err) {
+        callback(err)
+      }
+      callback(null, result);
+    })
   }
 };
 

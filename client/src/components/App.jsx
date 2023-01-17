@@ -51,7 +51,6 @@ const App = (props) => {
       setCurrentTab(null);
       setMovies(movies);
     }
-
     setSearch('')
   }
 
@@ -64,24 +63,17 @@ const App = (props) => {
 
   const handleAddSubmit = (event) => {
     event.preventDefault()
-
     let movie = {title: addMovie, watched: false}
 
     axios.post('/api/movies', movie)
       .then((result) => {
-        console.log(result, 'res here');
+        console.log(result, 'movie added!');
+        setAddMovie('')
       })
       .then(() => {
-        axios.get('/api/movies')
-          .then((result) => {
-            setAddMovie('')
-            setSearchedMovies(result.data)
-            setMovies(result.data)
-          })
+        updateData();
       })
-      .catch((err) => {
-        console.log(err, 'err in app')
-      })
+      .catch((err) => console.log(err, 'err in app'));
   }
 
   // LEVEL 3: TOGGLE WATCHED & FILTER BY WATCHED/NOT WATCHED
@@ -108,6 +100,14 @@ const App = (props) => {
     setCurrentTab(bool)
   }
 
+  const handleDelete = (movie) => {
+    axios.delete('api/movies', {data: movie})
+      .then((result) => {
+        updateData();
+      })
+      .catch((err) => console.log(err))
+  }
+
 // filtered array that isn't state but dynamically changes in app.
 const list = !search ? movies : movies.filter((movie) => movie.title.toLowerCase().includes(search.toLowerCase()));
 
@@ -116,7 +116,7 @@ return (
     <AddMovieBar addMovie={addMovie} onChange={handleAddChange} onSubmit={handleAddSubmit}/>
     <SearchBar search={search} onChange={handleSearchChange} onSubmit={handleSearchSubmit}/>
     <FilterWatched filter={filter}/>
-    <MovieList movies={list} toggle={toggleWatched} currentTab={currentTab}/>
+    <MovieList movies={list} toggle={toggleWatched} currentTab={currentTab} handleDelete={handleDelete}/>
   </>
   )
 };
